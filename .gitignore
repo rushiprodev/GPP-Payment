@@ -1,6 +1,39 @@
+# Python
 __pycache__/
-db.sqlite3
-.env
+*.py[cod]
+*.env
+*.sqlite3
+*.log
+*.pot
+*.pyc
+*.pyo
+*.db
+*.pyd
+
+# VSCode
 .vscode/
-.idea/
+
+# Environments
+env/
 venv/
+ENV/
+
+# Django stuff
+*.sqlite3
+db.sqlite3
+media/
+
+# Node/npm
+node_modules/
+package-lock.json
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Tailwind & Node
+node_modules/
+package-lock.json
+dist/
+core/static/src/input.css
+core/static/css/output.css

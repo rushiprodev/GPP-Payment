@@ -1,0 +1,66 @@
+{% extends "core/base.html" %}
+
+{% block title %}
+  Scan QR
+{% endblock title %}
+
+{% block content %}
+<div class="flex justify-center items-center min-h-[75vh] bg-blue-50">
+  <div class="bg-white shadow-md p-8 rounded-md w-full max-w-md">
+    <h1 class="text-center text-xl font-semibold mb-6">Scan QR code</h1>
+
+    <form action="{% url 'scan_qr' %}" method="post" enctype="multipart/form-data" class="space-y-4">
+      {% csrf_token %}
+
+      <input type="text" name="mobile_number"
+        placeholder="Enter 10 digit number"
+        required pattern="\d{10}"
+        class="w-full border border-gray-300 p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400" />
+
+      <input type="file" name="qr_image" accept="image/*" id="qr-input"
+        class="w-full border border-gray-300 p-2 rounded-md bg-white file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-sm file:font-semibold file:bg-blue-500 file:text-white hover:file:bg-blue-600" />
+
+      <!-- QR Preview will appear here -->
+      <div id="qr-preview-container" class="mt-2 flex justify-center"></div>
+
+      <button type="submit"
+        class="bg-emerald-500 text-white w-full py-2 rounded-md hover:bg-emerald-600 transition duration-200">
+        Scan
+      </button>
+    </form>
+
+    {% if result %}
+      <div class="mt-4 p-3 rounded-md {% if 'Failed' in result or 'Invalid' in result or 'Error' in result %}
+            bg-red-100 text-red-700 border border-red-300
+          {% else %}
+            bg-green-100 text-green-700 border border-green-300
+          {% endif %}">
+        {{ result }}
+      </div>
+    {% endif %}
+  </div>
+</div>
+
+<!-- JS for image preview -->
+<script>
+  const qrInput = document.getElementById('qr-input');
+  
+  qrInput.addEventListener('change', function (event) {
+    const file = event.target.files[0];
+    const previewContainer = document.getElementById('qr-preview-container');
+
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = function (e) {
+        previewContainer.innerHTML = ''; // Clear previous
+        const img = document.createElement('img');
+        img.src = e.target.result;
+        img.alt = 'QR Code Preview';
+        img.className = 'w-40 h-40 object-contain border rounded mt-2';
+        previewContainer.appendChild(img);
+      };
+      reader.readAsDataURL(file);
+    }
+  });
+</script>
+{% endblock content %}

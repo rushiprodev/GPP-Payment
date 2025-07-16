@@ -1,0 +1,51 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>{% block title %} Petrol Pump Payment{% endblock title %}</title>
+    <link rel="stylesheet" href="{% static 'src/output.css' %}">
+    
+    
+   
+</head>
+<body>
+<nav class="bg-gray-800 p-4 shadow-md">
+    <ul class="flex space-x-6">
+        <li>
+            <a href="{% url 'home' %}" class="text-white hover:text-yellow-300 font-medium text-lg">
+                Home
+            </a>
+        </li>
+        <li>
+            <a href="{% url 'generate_qr' %}" class="text-white hover:text-yellow-300 font-medium text-lg">
+                Generate QR
+            </a>
+        </li>
+                <li>
+            <a href="{% url 'scan_qr' %}" class="text-white hover:text-yellow-300 font-medium text-lg">
+                Scan_QR
+            </a>
+        </li>
+    </ul>
+</nav>
+
+
+
+    <h1 class="bg-blue-600 text-white py-4 px-6 text-3xl font-bold text-center">
+    Gas Petrol Pump Payment
+</h1>
+
+
+
+    {% block content %}{% endblock content %}
+
+
+
+
+
+
+</body> 
+</html>

@@ -1,0 +1,51 @@
+{% extends "core/base.html" %}
+
+{% block title %}
+  Generate QR
+{% endblock title %}
+
+{% block content %}
+<div class="flex justify-center items-center min-h-[75vh] bg-blue-50">
+  <div class="bg-white shadow-md p-8 rounded-md w-full max-w-md">
+    <h1 class="text-center text-xl font-semibold mb-6">Generate QR Code</h1>
+
+    <form action="{% url 'generate_qr' %}" method="post" class="space-y-4">
+      {% csrf_token %}
+      
+      <input type="text" name="mobile_number"
+        placeholder="Enter 10-digit mobile number"
+        required pattern="\d{10}"
+        class="w-full border border-gray-300 p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400" />
+
+      <input type="text" name="qr_data"
+        placeholder="Enter text to generate QR code"
+        required
+        class="w-full border border-gray-300 p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400" />
+
+      <button type="submit"
+        class="bg-emerald-500 text-white w-full py-2 rounded-md hover:bg-emerald-600 transition duration-200">
+        Generate
+      </button>
+    </form>
+
+    <div class="qr-preview">
+        {% if qr_image_url %}
+        <h2>Your QR code :</h2>
+        <img src="{{qr_image_url}}" alt="Generate QR Code">
+        <br>
+<div class="mt-6 flex justify-center">
+  <a href="{{ qr_image_url }}"
+     download="download"
+     class="px-6 py-3 bg-blue-600 text-white text-lg font-semibold rounded-md shadow-md hover:bg-blue-700 transition duration-200">
+    💾 Save QR
+  </a>
+</div>
+
+        {% endif %}
+
+    </div>
+  </div>
+</div>
+{% endblock content %}
+
+
